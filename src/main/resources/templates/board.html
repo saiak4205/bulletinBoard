@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>掲示板</title>
+</head>
+<body>
+<form th:action = "@{/note/write}" method = "post" th:object ="${articleForm}">
+<div th:errors = "*{name}" style ="color:red">エラー！</div>
+投稿者名：<input type = "text" name ="name" th:field = "*{name}"><br>
+<div th:errors = "*{content}" style ="color:red">エラー！</div>
+投稿内容：<br>
+<textarea name = "content" rows ="4" cols = "30" th:field = "*{content}" ></textarea><br>
+<button>送信</button><br><hr>
+</form>
+<div th:each = " article : ${application.articleList}">
+投稿者名：<span th:text = "${article.name}"></span><br>
+投稿内容：<br><span th:text = "${article.content}"></span>
+<form th:action = "@{/note/delete}" method = "post"><br>
+<input type="hidden" name = "id" th:value = "${article.id}"/>
+<input type="submit" value="記事を削除" /><br>
+</form><br>
+<span th:each = " comment : ${article.commentList}">
+コメント名：<span th:text = "${comment.name}"></span><br>
+コメント内容：<br><span th:text = "${comment.content}"></span><br><br>
+</span>
+<form th:action = "@{/note/write2}" method = "post" th:object="${commentForm}">
+<div th:if = "*{articleId} == ${article.id}" th:errors = "*{name}" style ="color:red">エラー！</div>
+コメント名：<input type = "text" name ="name" th:field = "*{name}"><br>
+<div th:if = "*{articleId} == ${article.id}" th:errors = "*{content}" style ="color:red">エラー！</div>
+コメント内容：<br>
+<textarea name = "content" rows ="4" cols = "30" th:field = "*{content}" ></textarea><br>
+<input type="hidden" name = "articleId" th:value = "${article.id}"/>
+<button>送信</button><br>
+</form>
+<hr></div>
+</body>
+</html>

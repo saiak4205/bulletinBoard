@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/student
+    username: saito
+    password: akio4205
+server:
+  servlet:
+    context-path: /BulletinBoard
